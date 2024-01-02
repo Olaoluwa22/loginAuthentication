@@ -2,6 +2,8 @@ package com.loginAuthentication.auth.controller;
 
 import com.loginAuthentication.auth.dto.LoginDto;
 import com.loginAuthentication.auth.service.AuthenticationService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +17,11 @@ public class AuthenticationController {
         this.authenticationService = authenticationService;
     }
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto){
-        return authenticationService.login(loginDto);
+    public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto, HttpServletResponse response, HttpServletRequest request){
+        return authenticationService.login(loginDto, response, request);
     }
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(){
-        return authenticationService.logout();
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response){
+        return authenticationService.logout(request, response);
     }
 }
