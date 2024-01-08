@@ -8,14 +8,17 @@ import com.loginAuthentication.auth.response.ApiResponseMessage;
 import com.loginAuthentication.auth.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
-    public UserServiceImpl(UserRepository userRepository) {
+    private PasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
     @Override
     public ResponseEntity<?> createUser(UserDto userDto) {
@@ -24,10 +27,10 @@ public class UserServiceImpl implements UserService {
             User user = new User();
             user.setName(userDto.getName());
             user.setEmail(userDto.getEmail());
-            user.setPassword(userDto.getPassword());
+            user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         try {
-            Optional<User> byEmail = userRepository.findByEmail(user.getEmail());
-            if (byEmail.isPresent()) {
+            User byEmail = userRepository.findByEmail(user.getEmail());
+            if (!(byEmail == null)) {
                 apiResponseMessage.setMessage(ConstantMessage.USER_EXISTS.getMessage());
                 return new ResponseEntity<>(apiResponseMessage, HttpStatus.BAD_REQUEST);
             }

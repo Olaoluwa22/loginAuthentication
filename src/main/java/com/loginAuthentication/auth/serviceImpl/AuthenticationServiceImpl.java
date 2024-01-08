@@ -29,13 +29,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public ResponseEntity<?> login(LoginDto loginDto, HttpServletResponse response, HttpServletRequest request) {
         ApiResponseMessage<String> apiResponseMessage = new ApiResponseMessage<>();
         apiResponseMessage.setMessage(ConstantMessage.FAILED.getMessage());
-        Optional<User> byEmail = userRepository.findByEmail(loginDto.getLogin());
+        User byEmail = userRepository.findByEmail(loginDto.getLogin());
         try {
-            if (byEmail.isEmpty()) {
+            if (byEmail ==null) {
                 apiResponseMessage.setMessage(ConstantMessage.INCORRECT.getMessage());
                 return new ResponseEntity<>(apiResponseMessage, HttpStatus.BAD_REQUEST);
             }
-            User user = byEmail.get();
+            User user = byEmail;
             if (!loginDto.getPassword().equals(user.getPassword())) {
                 apiResponseMessage.setMessage(ConstantMessage.INCORRECT.getMessage());
                 return new ResponseEntity<>(apiResponseMessage, HttpStatus.BAD_REQUEST);
