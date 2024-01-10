@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
             }
             userRepository.save(user);
             apiResponseMessage.setMessage(ConstantMessage.CREATED.getMessage());
-            return new ResponseEntity<>(apiResponseMessage, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(apiResponseMessage, HttpStatus.OK);
         }catch (Exception ex){
             ex.printStackTrace();
         }

@@ -2,30 +2,39 @@ package com.loginAuthentication.auth.serviceImpl;
 
 import com.loginAuthentication.auth.model.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
-    private String email;
-    private String password;
+    private User user;
     public UserDetailsImpl(User user){
-        this.email = user.getEmail();
-        this.password = user.getPassword();
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        this.user = user;
     }
     @Override
     public String getPassword() {
-        return this.password;
+        return user.getPassword();
     }
     @Override
     public String getUsername() {
-        return this.email;
+        return user.getEmail();
+    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        var authorities = user.getAuthorities();
+        List<GrantedAuthority> roleList = new ArrayList<>();
+
+        for (var authority: authorities) {
+            if (authority.isRole()){
+                roleList.add(new SimpleGrantedAuthority("ROLE_"+authority.getAuthorities()));
+            }else {
+                roleList.add(new SimpleGrantedAuthority(authority.getAuthorities()));
+            }
+        }
+        return roleList;
     }
     @Override
     public boolean isAccountNonExpired() {

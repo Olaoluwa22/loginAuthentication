@@ -2,6 +2,8 @@ package com.loginAuthentication.auth.model;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +15,11 @@ public class User {
     private String email;
     @Column(nullable = false, length = 30)
     private String password;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_authorities",
+               joinColumns = @JoinColumn(name = "user_id"),
+               inverseJoinColumns = @JoinColumn(name = "authorities_id"))
+    private Set<Authorities> authorities;
 
     public String getName() {
         return name;
@@ -38,12 +45,22 @@ public class User {
         this.password = password;
     }
 
+    public Set<Authorities> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authorities> authorities) {
+        this.authorities = authorities;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", authority=" + authorities +
                 '}';
     }
 }
