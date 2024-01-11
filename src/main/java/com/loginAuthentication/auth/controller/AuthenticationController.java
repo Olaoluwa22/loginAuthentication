@@ -6,13 +6,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authorization.AuthorityReactiveAuthorizationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.security.Principal;
 
 @RestController
 public class AuthenticationController {
@@ -20,19 +20,18 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationService authenticationService){
         this.authenticationService = authenticationService;
     }
-    @GetMapping("/demo")
-    @PreAuthorize(value = "hasAuthority('read') OR hasRole('ADMIN')")
-    public String demo(){
+    @GetMapping("/admin")
+    public String demo(Principal principal){
+        System.out.println(principal);
         var c = SecurityContextHolder.getContext().getAuthentication();
 
-        return "Demo";
+        return "ADMIN";
     }
-    @GetMapping("/test")
-    @PreAuthorize(value = "hasAuthority('write') OR hasRole('CLIENT')")
+    @GetMapping("/client")
     public String test(){
         var c = SecurityContextHolder.getContext().getAuthentication();
 
-        return "Test";
+        return "CLIENT";
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto, HttpServletResponse response, HttpServletRequest request){

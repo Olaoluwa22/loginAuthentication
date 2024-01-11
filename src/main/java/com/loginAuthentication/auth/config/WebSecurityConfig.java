@@ -30,6 +30,8 @@ public class WebSecurityConfig {
         //authorization
           http.authorizeHttpRequests(authorize -> authorize
                   .requestMatchers("/create-user").permitAll()
+                  .requestMatchers("/client").hasAnyRole("CLIENT","ADMIN")
+                  .requestMatchers("/admin").hasRole("ADMIN")
                   .anyRequest()
                   .authenticated());
 
