@@ -20,19 +20,6 @@ public class AuthenticationController {
     public AuthenticationController(AuthenticationService authenticationService){
         this.authenticationService = authenticationService;
     }
-    @GetMapping("/admin")
-    public String demo(Principal principal){
-        System.out.println(principal);
-        var c = SecurityContextHolder.getContext().getAuthentication();
-
-        return "ADMIN";
-    }
-    @GetMapping("/client")
-    public String test(){
-        var c = SecurityContextHolder.getContext().getAuthentication();
-
-        return "CLIENT";
-    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginDto loginDto, HttpServletResponse response, HttpServletRequest request){
         return authenticationService.login(loginDto, response, request);

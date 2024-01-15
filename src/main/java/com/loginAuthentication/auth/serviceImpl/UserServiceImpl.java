@@ -5,6 +5,7 @@ import com.loginAuthentication.auth.dto.UserDto;
 import com.loginAuthentication.auth.model.User;
 import com.loginAuthentication.auth.repository.UserRepository;
 import com.loginAuthentication.auth.response.ApiResponseMessage;
+import com.loginAuthentication.auth.service.MailNotificationService;
 import com.loginAuthentication.auth.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,11 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    private MailNotificationService mailNotificationService;
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder, MailNotificationService mailNotificationService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.mailNotificationService = mailNotificationService;
     }
     @Override
     public ResponseEntity<?> createUser(UserDto userDto) {
@@ -35,6 +38,7 @@ public class UserServiceImpl implements UserService {
                 return new ResponseEntity<>(apiResponseMessage, HttpStatus.BAD_REQUEST);
             }
             userRepository.save(user);
+            mailNotificationService.sendWelcomeEmail(user);
             apiResponseMessage.setMessage(ConstantMessage.CREATED.getMessage());
             return new ResponseEntity<>(apiResponseMessage, HttpStatus.OK);
         }catch (Exception ex){
