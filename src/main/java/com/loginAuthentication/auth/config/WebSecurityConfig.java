@@ -25,7 +25,8 @@ public class WebSecurityConfig {
         //authorization
           http.authorizeHttpRequests(authorize -> authorize
                   .requestMatchers("/create-user").permitAll()
-                  .requestMatchers("/user-dashboard", "/admin-dashboard").authenticated()
+                  .requestMatchers("/user-dashboard").hasAnyAuthority("USER", "ADMIN")
+                  .requestMatchers("/admin-dashboard").hasAuthority("ADMIN")
                   .anyRequest().authenticated());
 
           http.csrf(authorize -> authorize.disable());

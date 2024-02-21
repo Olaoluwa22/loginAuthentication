@@ -16,13 +16,11 @@ public class AuthenticationController {
     private UserService userService;
 
     @GetMapping("/user-dashboard")
-    @PreAuthorize("hasAuthority('USER')")
-    public String welcome(){
+    public String userDashboard(){
         return "Welcome to your User Dashboard " + userService.getLoggedInUser();
     }
     @GetMapping("/admin-dashboard")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String admin(){
+    public String adminDashboard(){
         return "Welcome to your Admin Dashboard " + userService.getLoggedInUser();
     }
 }
