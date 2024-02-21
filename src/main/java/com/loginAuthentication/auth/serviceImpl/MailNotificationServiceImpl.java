@@ -18,7 +18,7 @@ public class MailNotificationServiceImpl implements MailNotificationService {
         simpleMailMessage.setSubject("Welcome");
         simpleMailMessage.setFrom("olaoluwaKay@gmail.com");
         simpleMailMessage.setTo(user.getEmail());
-        simpleMailMessage.setText("Welcome "+user.getName());
+        simpleMailMessage.setText("Welcome "+user.getRole());
         try {
             javaMailSender.send(simpleMailMessage);
 
@@ -26,6 +26,5 @@ public class MailNotificationServiceImpl implements MailNotificationService {
             mailException.getMessage();
             return;
         }
-        System.out.println("Message Sent Successfully!");
     }
 }

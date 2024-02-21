@@ -1,10 +1,10 @@
-package com.loginAuthentication.auth.constant;
+package com.loginAuthentication.auth.util;
 
 public enum ConstantMessage {
     SUCCESS("Successful", 1),
     FAILED("Failed", 2),
     NOT_FOUND("Cannot be found", 3),
-    INCORRECT("Incorrect Email or Password", 4),
+    INCORRECT_DETAILS("Incorrect Email or Password", 4),
     LOGIN_SUCCESS("Successfully Logged In...", 5),
     USER_EXISTS("User Already Exist...", 6),
     CREATED("Successfully Created", 7),

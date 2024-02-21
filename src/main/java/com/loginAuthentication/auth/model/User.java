@@ -1,6 +1,7 @@
 package com.loginAuthentication.auth.model;
 
 import jakarta.persistence.*;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
@@ -10,23 +11,18 @@ public class User {
     @Id
     private Long id;
     @Column(nullable = false)
-    private String name;
-    @Column(nullable = false)
     private String email;
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false)
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_authorities",
-               joinColumns = @JoinColumn(name = "user_id"),
-               inverseJoinColumns = @JoinColumn(name = "authorities_id"))
-    private Set<Authorities> authorities;
+    @Column(nullable = false)
+    private String role;
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {
@@ -45,22 +41,13 @@ public class User {
         this.password = password;
     }
 
-    public Set<Authorities> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<Authorities> authorities) {
-        this.authorities = authorities;
-    }
-
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", authority=" + authorities +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

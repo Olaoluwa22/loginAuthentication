@@ -6,20 +6,20 @@ import jakarta.validation.constraints.Pattern;
 
 public class UserDto {
     @NotNull
-    private String name;
-    @NotNull
     @Email
     private String email;
     @NotNull
     @Pattern(regexp = "[a-zA-Z0-9]{8,}")
     private String password;
+    @NotNull
+    private String role;
 
-    public String getName() {
-        return name;
+    public String getRole() {
+        return role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getEmail() {
@@ -41,7 +41,7 @@ public class UserDto {
     @Override
     public String toString() {
         return "UserDto{" +
-                "name='" + name + '\'' +
+                "role='" + role + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
