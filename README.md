@@ -1,29 +1,12 @@
-SIMPLE LOGIN AUTHENTICATION API
+Login Authentication API with Java, Spring Boot, and Spring Security
 
-This is a simple Login Authentication API built with Java, Springboot and Spring Security.
+This is a simple Login Authentication API built with Java, Spring Boot, and Spring Security. It securely manages user authentication and authorization processes, with user data persisted in a MySQL database.
 
-User Data is persisted using MySql database.
+Endpoints Provided:
+User Registration: Endpoint ("/create-user") for registering potential users, requiring email, password, and role information.
 
-It provides endpoints for user registration, login, and authentication.
+Login: Endpoints ("/user-dashboard" & "/admin-dashboard") for accessing user or admin dashboards, requiring registered email and password credentials.
 
-Features
+Logout: Endpoint ("/logout") for securely logging out from the application.
 
--Create a User:
-
-The user will enter personal details such as email,
-password and role(user/admin) for an initial profile set up.
-
--User login with email and password: 
-
-The user is required to input their username(email) and password
- for authentication and authorization.
-
--DaoAuthentication Provider: 
-
-Spring security will use DaoAuthenticationProvider to get the 
-UserDetails and also encode the password using BCryptPasswordEncoder.
-
--User Authorization: 
-
-Based on user authority/role, user is allowed to access some endpoints and 
-not allowed to access some endpoints.
+Forget Password: Endpoint("/forget-password") for resetting forgotten passwords, requiring the user's email to generate a new password.
